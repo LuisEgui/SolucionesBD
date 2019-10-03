@@ -1,0 +1,11 @@
+*.aux
+*.log
+*.toc
+*.synctex.gz
+*.out
+
+/problemas/*.aux
+/problemas/*.log
+/problemas/*.toc
+/problemas/*.synctex.gz
+/problemas/*.out
