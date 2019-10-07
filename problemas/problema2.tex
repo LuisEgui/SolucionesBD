@@ -9,28 +9,33 @@ Con el fin de abreviar el modelo, definimos:
 	\end{center}
 	\begin{enumerate}
 		% a)
-		\item $\Pi_{idp}(\sigma_{idc = C1 \wedge ida = A1}(E))$
+		\item 
+		$$\Pi_{idp}(\sigma_{idc = C1 \wedge ida = A1}(E))$$
 		
 		% b)
-		\item $\Pi_{ida}(\sigma_{idp = P1}(E))$
+		\item 
+		$$\Pi_{ida}(\sigma_{idp = P1}(E))$$
 		
 		% c)
-		\item Definimos:\\ 
-		$\rho_{ciudad\rightarrow c_1}(A)$\\
-		$\Pi_{idp}(\sigma_{color=``rojo"}(C\innerjoin[C.idc = E.idc](\sigma_{c_1 = ``Segovia" \vee c_1 = ``Barcelona"}(E \innerjoin[E.ida = A.ida] A))))$\\[0.25cm]
+		\item Definimos:
+		$$\rho_{ciudad\rightarrow c_1}(A)$$
+		Luego,
+		$$\Pi_{idp}(\sigma_{color=``rojo"}(C\innerjoin[C.idc = E.idc](\sigma_{c_1 = ``Segovia" \vee c_1 = ``Barcelona"}(E \innerjoin[E.ida = A.ida] A))))$$\\[0.25cm]
 		Recordemos que $w_1 \innerjoin w_2 \equiv w_2 \innerjoin w_1$ , por lo que realmente da igual filtrar primero por %
 		componentes \textit{rojos} enviados; que por artículos enviados fabricados en \textit{Segovia} o \textit{Barcelona}.
 		
 		% d)
-		\item Definimos:\\
-		$\rho_{ciudad\rightarrow c_2}(P)$\\
-		$\Pi_{idc}(\sigma_{c_2 = ``Segovia"} (P \innerjoin[P.idp = E.idp] (\sigma_{c_1 = ``Segovia"} (E \innerjoin[E.ida = A.ida] A))))$
+		\item Definimos:
+		$$\rho_{ciudad\rightarrow c_2}(P)$$
+		Luego,
+		$$\Pi_{idc}(\sigma_{c_2 = ``Segovia"} (P \innerjoin[P.idp = E.idp] (\sigma_{c_1 = ``Segovia"} (E \innerjoin[E.ida = A.ida] A))))$$
 		
 		% e)
-		\item $\Pi_{color}(C\innerjoin[C.idc = E.idc](\sigma_{ipd = P1}(E)))$
+		\item $$\Pi_{color}(C\innerjoin[C.idc = E.idc](\sigma_{ipd = P1}(E)))$$
 		
 		% f)
-		\item Definimos:\\
-		$\rho_{ciudad\rightarrow c_3}(C)$\\
-		$E\innerjoin[E.ida = A.ida] (A\innerjoin[c_1 = c_2](P\innerjoin[c_2 = c_2]C))$\\
+		\item Definimos:
+		$$\rho_{ciudad\rightarrow c_3}(C)$$
+		Luego,
+		$$E\innerjoin[E.ida = A.ida] (A\innerjoin[c_1 = c_2](P\innerjoin[c_2 = c_2]C))$$
 	\end{enumerate}

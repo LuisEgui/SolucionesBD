@@ -11,28 +11,30 @@ Con el fin de abreviar el modelo, definimos:
 	% a)
 	\item Por simplificar, definimos:
 	$$\rho_{NombEmp\rightarrow neT} (T) \land \rho_{NombComp\rightarrow ncT} (T)$$
+	Luego,
 	$$\alpha \leftarrow \Pi_{neT}(\sigma_{ncT = ``IBM"} (T))$$
 	
 	% b)
-	\item Definimos:
+	\item
 	$$\Pi_{neT}(T)-\alpha$$
 	
 	% c)	
-	\item 
-	$$\beta \leftarrow \Pi_{neT}(\sigma_{ncT = ``IBM" \land sueldo > 2000}(T))$$
+	\item
+	$$\Pi_{neT}(\sigma_{ncT = ``IBM" \land sueldo > 2000}(T))$$
 	
 	% d)
 	\item Definimos:
 	$$\rho_{ciudad \rightarrow cs} (S) \land \rho_{ciudad \rightarrow cv}(V) \land \rho_{NombEmp\rightarrow neV} (V) \land \rho_{NombComp\rightarrow ncS} (S)$$
+	Luego,
 	$$\sigma_{cs = cv}(S\innerjoin[ncS = ncT] (T\innerjoin[neT = neV] V))$$
 	
 	% e)
 	\item Se entiende que $nJ$ es $FK$ de $V$.\\ 
 	Definimos:
 	$$\rho_{calle\rightarrow c}(V) \land \rho_{NombEmp\rightarrow neJ}(J) \land \rho_{NombJefe \rightarrow nJ}(J)$$
-	Obtenemos la direccion de los jefes:
+	Luego, obtenemos la direccion de los jefes:
 	$$\gamma \leftarrow \amalg_{nJ}(V \innerjoin[neV = nJ] J)$$
-	La relacion $\gamma = (\underline{neJ}, \underline{c}, \underline{cv})$ tal que $c$ y $cv$ son las calles de los jefes de $neJ$.\\
+	La relacion $\gamma = (\underline{neJ}, \underline{c}, \underline{cv})$ tal que $c$ y $cv$ son las calles y ciudades - respectivamente - de los jefes de $neJ$.\\
 	La operacion que nos hace obtener aquellos empleados cuyas direcciones concuerdan con \textbf{cada una} de las direcciones de sus jefes es:
 	$$\Pi_{neV} (V \div \gamma)$$
 	No obstante dado que un $``$Empleado$"$  puede tener varios domicilios y sabiendo que $nJ \in V$, la operacion anterior no nos es del todo valida porque en la consulta se pide por la misma direccion que la de $``$su$"$ jefe - sin indicar que jefe.\\
