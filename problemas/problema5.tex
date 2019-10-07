@@ -1,0 +1,32 @@
+Con el fin de abreviar el modelo, definimos:
+\begin{center}
+	\begin{tabular}{l}
+		$C \equiv Clientes(\underline{NCliente}, Nombre, Direccion, Telefono, Poblacion)$\\
+		$P \equiv Producto(\underline{CodProducto}, Descripcion, Precio)$\\
+		$V \equiv Venta(\underline{idVenta}, CodProducto, NCliente, Cantidad)$\\
+	\end{tabular}
+\end{center}
+\begin{enumerate}
+	% a)
+	\item 
+	$$\Pi_{nombre}(\sigma_{dirrecion = Palencia}(C))$$
+	
+	% b)
+	\item Esta consulta no me queda totalmente clara. Entiendo que se pide que \underline{CodProducto} = Descripcion (P); no obstante, es extraño ya que $type[CodProducto]$ puede ser distinto de $type[Descripcion]$.
+	$$\rho_{CodProducto\rightarrow cp}(P) \land \rho_{descripcion \rightarrow desc}(P)$$
+	$$\sigma{cp = desc}(P)$$
+	
+	% c)
+	\item Definimos:
+	$$\rho_{NCliente \rightarrow nc} (C) \land \rho_{NCliente \rightarrow ncV} (V)$$
+	$$\amalg _{cp}(C\innerjoin[ncC = ncV] (\sigma_{cantidad > 500} (V)))$$
+	
+	% d)
+	\item 
+	$$\Pi_{nombre}(C - (C\innerjoin[ncC = ncV] V)) $$
+	
+	% e)
+	\item 
+	$$\Pi_{cp}(V\innerjoin[ncV = ncC] (\sigma_{direccion = ``Palencia" \vee direccion = ``Valladolid"} (C)))$$
+	
+\end{enumerate}
