@@ -34,7 +34,7 @@ Con el fin de abreviar el modelo, definimos:
 	$$\rho_{calle\rightarrow c}(V) \land \rho_{NombEmp\rightarrow neJ}(J) \land \rho_{NombJefe \rightarrow nJ}(J)$$
 	Luego, obtenemos la direccion de los jefes:
 	$$\gamma \leftarrow \amalg_{nJ}(V \innerjoin[neV = nJ] J)$$
-	La relacion $\gamma = (\underline{neJ}, \underline{c}, \underline{cv})$ tal que $c$ y $cv$ son las calles y ciudades - respectivamente - de los jefes de $neJ$.\\
+	La relacion $\gamma (\underline{neJ}, \underline{c}, \underline{cv})$ tal que $c$ y $cv$ son las calles y ciudades - respectivamente - de los jefes de $neJ$.\\
 	La operacion que nos hace obtener aquellos empleados cuyas direcciones concuerdan con \textbf{cada una} de las direcciones de sus jefes es:
 	$$\Pi_{neV} (V \div \gamma)$$
 	No obstante dado que un $``$Empleado$"$  puede tener varios domicilios y sabiendo que $nJ \in V$, la operacion anterior no nos es del todo valida porque en la consulta se pide por la misma direccion que la de $``$su$"$ jefe - sin indicar que jefe.\\
