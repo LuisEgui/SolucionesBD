@@ -1,0 +1,99 @@
+Dado el modelo relacional:
+\begin{center}
+	\begin{tabular}{l}
+		$Pilotos(\underline{iniciales}, nombre, escuderia, pais)$\\
+		$Circuitos(\underline{nombre}, longitud, nVueltas)$\\
+		$Parrilla(\underline{piloto}, \underline{circuito}, posicion)$\\				$Tiempos(\underline{piloto}, \underline{circuito}, \underline{nVuelta}, tiempo, paradaBoxes)$\\
+	\end{tabular}
+\end{center}
+
+\begin{enumerate}
+
+	% a)
+	\item 
+	Realizando la consulta con un producto cartesiano, seria:
+	\begin{lstlisting}[language=sql]
+	select p1.*
+	from Pilotos as p1, Pilotos as p2
+	where p1.iniciales != p2.iniciales -- distinct
+	and p1.pais = p2.pais and p1.escuderia = p2.escuderia;
+	\end{lstlisting}
+	
+	Haciendo uso del \textit{join}, seria:
+	\begin{lstlisting}[language=sql]
+	select p1.*
+	from Pilotos p1 
+	     join Pilotos p2 on p1.escuderia = p2.escuderia
+	where p1.pais = p2.pais and p1.iniciales != p2.iniciales;
+	\end{lstlisting}
+	
+	% b)
+	\item 
+	\begin{lstlisting}[language=sql]
+	select distinct escuderia
+	from Pilotos 
+	     inner join Parrilla on iniciales = piloto
+	where posicion in ('1','2','3');
+	\end{lstlisting}
+	
+	% c)
+	\item 
+	\begin{lstlisting}[language=sql]
+	select circuito, max(tiempo) as tiempo_max_vuelta
+	from Tiempos
+	group by circuito;
+	\end{lstlisting}
+
+	\newpage
+	% d)
+	\item 
+	\begin{lstlisting}[language=sql]
+	select circuito, piloto, count(nVuelta) as vueltas_completadas, 
+	       sum(tiempo) as tiempo_total
+	from Tiempos
+	where circuito = "Monza"
+	group by circuito, piloto
+	order by vueltas_completadas desc, tiempo_total asc;
+	\end{lstlisting}
+	
+	% e)
+	\item 
+	Usando el operador \textit{limit} de MySQL o PostgreSQL:
+	\begin{lstlisting}[language=sql]
+	select nombre, longitud
+	from Circuitos
+	order by longitud desc
+	limit 1;
+	\end{lstlisting}
+	
+	Para OracleSQL 12c R1 (12.1):
+	\begin{lstlisting}[language=sql]
+	select nombre, longitud
+	from Circuitos
+	order by longitud desc
+	fetch first 1 rows only;
+	\end{lstlisting}
+	
+	% f)
+	\item
+	\begin{lstlisting}[language=sql]
+	select piloto, circuito, sum(tiempo) as tiempo_invertido, 
+		   count(nVuelta) as vueltas_totales
+	from Tiempos
+		 inner join Circuitos on circuito = nombre
+	group by piloto, circuito
+	having count(vueltas_totales) = nVueltas;
+	\end{lstlisting}
+	
+	\newpage
+	% g)
+	\item
+	Suponemos que \textit{Tiempos(paradaBoxes)} se trata de un \textit{boolean} cuyo valor
+	es \textit{1} cuando el piloto ha realizado la parada en la vuelta indicada en el
+	registro; y que por defecto su valor es \textit{0}.
+	\begin{lstlisting}[language=sql]
+	select circuito, avg(paradaBoxes) as media_paradas_boxes
+	from Tiempos
+	group by circuito;
+	\end{lstlisting}
+\end{enumerate}
