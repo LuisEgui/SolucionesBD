@@ -16,16 +16,14 @@ Dado el modelo relacional:
 	select p1.*
 	from Pilotos as p1, Pilotos as p2
 	where p1.iniciales != p2.iniciales -- distinct
-	and p1.pais = p2.pais and p1.escuderia = p2.escuderia;
-	\end{lstlisting}
+	and p1.pais = p2.pais and p1.escuderia = p2.escuderia;\end{lstlisting}
 	
 	Haciendo uso del \textit{join}, seria:
 	\begin{lstlisting}[language=sql]
 	select p1.*
 	from Pilotos p1 
 	     join Pilotos p2 on p1.escuderia = p2.escuderia
-	where p1.pais = p2.pais and p1.iniciales != p2.iniciales;
-	\end{lstlisting}
+	where p1.pais = p2.pais and p1.iniciales != p2.iniciales;\end{lstlisting}
 	
 	% b)
 	\item 
@@ -33,16 +31,14 @@ Dado el modelo relacional:
 	select distinct escuderia
 	from Pilotos 
 	     inner join Parrilla on iniciales = piloto
-	where posicion in ('1','2','3');
-	\end{lstlisting}
+	where posicion in ('1','2','3');\end{lstlisting}
 	
 	% c)
 	\item 
 	\begin{lstlisting}[language=sql]
 	select circuito, max(tiempo) as tiempo_max_vuelta
 	from Tiempos
-	group by circuito;
-	\end{lstlisting}
+	group by circuito;\end{lstlisting}
 
 	\newpage
 	% d)
@@ -53,8 +49,7 @@ Dado el modelo relacional:
 	from Tiempos
 	where circuito = "Monza"
 	group by circuito, piloto
-	order by vueltas_completadas desc, tiempo_total asc;
-	\end{lstlisting}
+	order by vueltas_completadas desc, tiempo_total asc;\end{lstlisting}
 	
 	% e)
 	\item 
@@ -63,16 +58,14 @@ Dado el modelo relacional:
 	select nombre, longitud
 	from Circuitos
 	order by longitud desc
-	limit 1;
-	\end{lstlisting}
+	limit 1;\end{lstlisting}
 	
 	Para OracleSQL 12c R1 (12.1):
 	\begin{lstlisting}[language=sql]
 	select nombre, longitud
 	from Circuitos
 	order by longitud desc
-	fetch first 1 rows only;
-	\end{lstlisting}
+	fetch first 1 rows only;\end{lstlisting}
 	
 	% f)
 	\item
@@ -82,10 +75,10 @@ Dado el modelo relacional:
 	from Tiempos
 		 inner join Circuitos on circuito = nombre
 	group by piloto, circuito
-	having count(vueltas_totales) = nVueltas;
-	\end{lstlisting}
+	having count(vueltas_totales) = nVueltas;\end{lstlisting}
 	
 	\newpage
+	
 	% g)
 	\item
 	Suponemos que \textit{Tiempos(paradaBoxes)} se trata de un \textit{boolean} cuyo valor
@@ -94,6 +87,5 @@ Dado el modelo relacional:
 	\begin{lstlisting}[language=sql]
 	select circuito, avg(paradaBoxes) as media_paradas_boxes
 	from Tiempos
-	group by circuito;
-	\end{lstlisting}
+	group by circuito;\end{lstlisting}
 \end{enumerate}
