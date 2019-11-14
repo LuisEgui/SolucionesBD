@@ -121,9 +121,9 @@
 % -------------------------------------------------------------------------------------
 
 \hypersetup{
-	pdftitle={Resolución_de_problemas_de_Álgebra_Relacional},
+	pdftitle={Resolución_de_consultas_sql},
 	pdfauthor={Luis Egui},
-	pdfkeywords={resolucion, algebrarelacional, database, ejercicios},
+	pdfkeywords={resolucion, sql, database, ejercicios},
 	pdfnewwindow=true,
 	colorlinks=false,
 	linktoc=page
@@ -137,7 +137,7 @@
 \fancyhf{}
 \setlength\headheight{15pt}
 \fancyhead[L]{Soluciones}
-\fancyhead[R]{Álgebra Relacional}
+\fancyhead[R]{Consultas SQL}
 \fancyfoot[R]{[\thepage/\pageref{LastPage}]}
 
 
@@ -251,7 +251,36 @@
 	\tableofcontents
 	\setcounter{page}{0}
 	\newpage
+	
+	% Cambio del titulo del abstracto:
+	\renewcommand{\abstractname}{Estilo del codigo SQL usado}
+	\setcounter{page}{0}
+	
+	% Abstracto: Estilo del codigo SQL usado
+	\begin{abstract}
+		\thispagestyle{empty}
+		Para el codigo SQL me gusta que este sea lo mas legible posible, y, dado que SQL es un lenguaje declarativo de cuarta generacion (4GL)\footnote{\href{https://en.wikipedia.org/wiki/Fourth-generation_programming_language}{4th generation language}}, resulta mas comodo leerlo tal y como se lee un libro. De esta manera:\\
+		
+		\begin{itemize}
+			% Sentencias, sintaxis
+			\item La sintaxis SQL, independientemente del Database Management System (DBMS), esta escrita en \textit{lowercase}.
+			
+			% Atributos
+			\item Los atributos indicados en el operador \textit{``select"} estan sujetos al nombre indicado en el modelo relacional dado. Los renombramientos de los mismos o de funciones de agregacion estan escritos en \textit{lower\_snake\_case}. \\
+			Solo en caso necesario, se indicara: agregando el nombre de la tabla (o su correspondiente renombramiento) delante del atributo. 
+			En mi opinion, aumenta la comprension de los atributos que resultan cabecera de la consulta que se esta haciendo.\\
+			En caso de haber bastantes atributos, estos iran sangrados con respecto al operador \textit{``select"}. Por norma general, no suelo superar los 80 caracteres por linea.
+			
+			% Tablas
+			\item Los nombres de las tablas estan escritos en \textit{CamelCase}, sin importar como hayan sido nombradas en el modelo.
+			
+			% Joins y subconsultas
+			\item Los \textit{``joins"}, da igual el tipo, se realizaran con sangrado respecto del operador \textit{``from"} para asi tener clara la separacion de las distintas partes de la consulta y mejorar la comprension de la misma.\\
+			Lo mismo es aplicable para subconsultas en el operador \textit{``from"} o en el operador \textit{``where"}.
+		\end{itemize}
+	\end{abstract}
 
+	\newpage
 	\section*{Problema 1}
 	\addcontentsline{toc}{section}{Problema 1}\
 	\input{problemas/problema1}

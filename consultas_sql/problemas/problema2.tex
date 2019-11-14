@@ -16,7 +16,8 @@ Dado el modelo relacional:
 	from Habla
 	where grado = 3
 	group by idioma
-	order by no_hablantes desc;\end{lstlisting}
+	order by no_hablantes desc
+	fetch 1 rows only;\end{lstlisting}
 	
 	% b)
 	\item 
@@ -24,12 +25,11 @@ Dado el modelo relacional:
 	select avg(edad) as promedio_edad_hispanohablantes
 	from Habla h1
 		 inner join Persona on h1.dniPersona = dni
-	where idioma = `Espanol' and idioma not in (
+	where idioma = `Espanol' and not exists (
 			select idioma
 			from Habla h2
-			where h1.dniPersona = h2.dniPersona and h2.idioma != `Espanol');
-	-- TODO: idioma = null?\end{lstlisting}
-
+			where h1.dniPersona = h2.dniPersona and h2.idioma != `Espanol');\end{lstlisting}
+			
 	% c)
 	\item 
 	Esta consulta no nos devuelve una unica fila, sino que para cada persona; nos devuelve el numero de idiomas que habla. AL estar ordenadas de mayor numero de idiomas hablados, a menor: obtendremos en primera posicion la persona que mas idiomas habla.
@@ -70,7 +70,7 @@ Dado el modelo relacional:
 		  group by dni
 		  order by lenguas_habladas desc
 		 )
-	where max_lh = lenguas_habladas;\end{lstlisting}	
+	having max_lh = lenguas_habladas;\end{lstlisting}	
 	\newpage
 
 	% d)
@@ -86,7 +86,7 @@ Dado el modelo relacional:
 		  group by p2.dni
 		  order by num_citas desc
 		 )
-	where max_nc = num_citas;\end{lstlisting}
+	having max_nc = num_citas;\end{lstlisting}
 	
 	Para MySQL y PostgreSQL:
 	\begin{lstlisting}[language=sql]
@@ -124,6 +124,9 @@ Dado el modelo relacional:
 	minus
 	select distinct idioma -- idiomas pedidos en las citas
 	from SolicitaCita;\end{lstlisting}
+	
+	Tambien es posible realizar la consulta haciendo uso del \textit{left join} sobre la tabla $SolicitaCita$.
+	En cuanto a cual seria la consulta mas optima, seria necesario realizar una prueba dado que, aunque la operacion \textit{minus} es pobre en optimizacion, esta se realiza sobre valores ya filtrados anteriormente.
 	
 	% f)
 	\item 
