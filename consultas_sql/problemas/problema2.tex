@@ -25,7 +25,7 @@ Dado el modelo relacional:
 	select avg(edad) as promedio_edad_hispanohablantes
 	from Habla h1
 		 inner join Persona on h1.dniPersona = dni
-	where idioma = `Espanol' and not exists (
+	where idioma = 'Espanol' and not exists (
 			select idioma
 			from Habla h2
 			where h1.dniPersona = h2.dniPersona and h2.idioma != `Espanol');\end{lstlisting}
@@ -123,8 +123,8 @@ Dado el modelo relacional:
 		 inner join Habla h1 on dniSolicitante = h1.dniPersona
 		 inner join Habla h2 on dniSolicitado = h2.dniPersona
 		 inner join Persona on dniSolicitado = dni
-	where sexo = `M' and edad < 25 
-		  and h1.idioma = `Ingles' and h2.idioma = `Ingles';\end{lstlisting}
+	where sexo = 'M' and edad < 25 
+		  and h1.idioma = 'Ingles' and h2.idioma = `Ingles';\end{lstlisting}
 	
 	% g)
 	\item

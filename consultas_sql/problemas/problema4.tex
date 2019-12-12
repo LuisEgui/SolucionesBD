@@ -1,0 +1,66 @@
+Dado el modelo relacional:
+\begin{center}
+	\begin{tabular}{l}
+		$Competicion(\underline{id}, nombre, fecha, lugar, ambito)$\\
+		$Participa(\underline{dni}, \underline{idComp}, clasificacion)$\\
+		$Patinador(\underline{dni}, nombre, apellidos, sexo, fechaNac, pais)$\\
+	\end{tabular}
+\end{center}
+
+\begin{enumerate}
+	% a)
+	\item \begin{lstlisting}[language=sql]
+	select count(*) as num_comp
+	from Participa
+		 inner join Competicion on id = idComp
+	where lugar = 'Chicago'
+		  and (fecha >= 2010 and fecha <= 2015)
+		  and clasificacion is not null; -- si !null => se ha celebrado\end{lstlisting}
+		  
+	% b)
+	\item \begin{lstlisting}[language=sql]
+	select nombre, apellidos
+	from Participa
+		 inner join Patinador on Patinador.dni = Participa.dni
+		 inner join Competicion on id = idComp
+	where sexo = 'M' and ambito = 2 -- Ambito: (2) Camp. Mundial
+		  and clasificacion = 1;\end{lstlisting}
+		  
+	% c)
+	\item  \begin{lstlisting}[language=sql]
+	select pais, avg(clasificacion) as media_clasif
+	from Participa
+		 inner join Patinador on Patinador.dni = Participa.dni
+	where clasificacion is not null -- si !null => se ha celebrado
+		  and sexo = 'H'
+	group by pais
+	order by media_clasif asc;\end{lstlisting}
+	
+	% d)
+	\item Esta consulta no deja claro si la competicion se ha celebrado o no.\begin{lstlisting}[language=sql]
+	select id, nombre, count(dni) as num_participantes
+	from Participa
+		 inner join Competicion on id = idComp
+	group by id, nombre
+	order by num_participantes desc
+	fetch first row with ties;\end{lstlisting}
+	
+	Haciendo uso de un SQL mas estandar:
+	
+	\begin{lstlisting}[language=sql]
+	select id, nombre, count(dni) as num_participantes
+	from Participa
+		 inner join Competicion on id = idComp
+	group by id, nombre
+	having count(dni) = (
+			select max(num_participantes)
+			from (
+				 select idComp, count(dni) as num_participantes 
+				 from Participa
+				 group by idComp
+			)
+		);\end{lstlisting}
+		
+	% e)
+	\item No me queda claro que es lo que pide exactamente.
+\end{enumerate}

@@ -47,25 +47,27 @@ Dado el modelo relacional:
 	select circuito, piloto, count(nVuelta) as vueltas_completadas, 
 	       sum(tiempo) as tiempo_total
 	from Tiempos
-	where circuito = "Monza"
+	where circuito = 'Monza'
 	group by circuito, piloto
 	order by vueltas_completadas desc, tiempo_total asc;\end{lstlisting}
 	
 	% e)
 	\item 
-	Usando el operador \textit{limit} de MySQL o PostgreSQL:
+	Haciendo uso de un SQL mas estandar:
 	\begin{lstlisting}[language=sql]
 	select nombre, longitud
 	from Circuitos
-	order by longitud desc
-	limit 1;\end{lstlisting}
+	where longitud = (
+			select max(longitud)
+			from Circuitos
+			);\end{lstlisting}
 	
 	Para OracleSQL 12c R1 (12.1):
 	\begin{lstlisting}[language=sql]
 	select nombre, longitud
 	from Circuitos
 	order by longitud desc
-	fetch first 1 rows only;\end{lstlisting}
+	fetch first row with ties;\end{lstlisting}
 	
 	% f)
 	\item

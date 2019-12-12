@@ -1,0 +1,67 @@
+Dado el modelo relacional:
+\begin{center}
+	\begin{tabular}{l}
+		$Montura(\underline{codigoMontura}, nombre, sexo, edad)$\\
+		$Monta(\underline{dni}, \underline{codigoMontura}, \underline{idCompeticion}, clasificacion)$\\
+		$Jinete(\underline{dni}, nombre, apellidos, categoria, sexo, cache)$\\
+		$Competicion(\underline{id}, nombre, fecha, lugar)$\\	
+	\end{tabular}
+\end{center}
+
+\begin{enumerate}
+	
+	% a)
+	\item \begin{lstlisting}[language=sql]
+	select count(*) as num_competiciones
+	from Competicion
+	where fecha = 2014 and lugar = `Madrid';\end{lstlisting}
+	
+	% b)
+	\item \begin{lstlisting}[language=sql]
+	select sexo, categoria, avg(cache) as cache_medio
+	from Jinete
+	where sexo = 'Mujer'
+	group by sexo, categoria;\end{lstlisting}
+	
+	% c()
+	\item \begin{lstlisting}[language=sql]
+	select idCompeticion, nombre, count(distinct dni) as num_participantes
+	from Monta
+		 inner join Competicion on id = idCompeticion
+	group by idCompeticion, nombre
+	order by num_participantes desc
+	fetch first row with ties;\end{lstlisting}
+	
+	% d)
+	\item \begin{lstlisting}[language=sql]
+	select nombre, apellidos, categoria, 
+		   count(distinct idCompeticion) as num_participaciones
+	from Monta
+		 inner join Jinete on Monta.dni = Jinete.dni
+	where sexo = 'Hombre' and clasificacion > 1
+	group by nombre, apellidos, categoria
+	having count(num_participaciones) >= 100
+	order by num_participaciones desc;\end{lstlisting}
+	
+	% e)
+	\item \begin{lstlisting}[language=sql]
+	select nombre, apellidos, categoria, cache
+	from Jinete, (	select categoria, avg(cache) as media_cache
+					from Jinete
+					where sexo = 'Hombre'
+					group by categoria
+					) referencia_masculina
+	where sexo = 'Mujer' 
+		  and Jinete.categoria = referencia_masculina.categoria
+		  and cache > referencia_masculina.media_cache;\end{lstlisting}
+		  
+	% f)
+	\item \begin{lstlisting}[language=sql]
+	select avg(cache)
+	from (
+		select distinct dni, cache
+		from Monta
+			 inner join Jinete on Monta.dni = Jinete.dni
+		where clasificacion in ('1','2','3')
+	);\end{lstlisting}
+\end{enumerate}
